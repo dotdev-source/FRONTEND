@@ -34,7 +34,7 @@ function App() {
           <Route path="/dashboard/students">
             <Route index element={<Students />} />
             <Route path="/:id" element={<EditStudent />} />
-            <Route path="/new" element={<AddNewStudent />} />
+            <Route path="/new" element={<AddNewStudent  />} />
           </Route>
         </Route>
         {/* End of Dashboard Layout or End of Protected Routes*/}
