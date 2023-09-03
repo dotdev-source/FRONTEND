@@ -10,6 +10,7 @@ import Teachers from "./features/teachers/Teachers";
 import AddNewTeacher from "./components/NewTeacherForm";
 import Signup from "./features/auth/Signup";
 import EditStudent from "./features/students/EditStudent";
+import Prefetch from "./features/auth/Prefetch";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="login" element={<Login />} />
 
         {/* Begining of Dashboard Layout or protected routes */}
+        <Route element={<Prefetch />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
 
@@ -36,7 +38,8 @@ function App() {
             <Route path="/:id" element={<EditStudent />} />
             <Route path="/new" element={<AddNewStudent  />} />
           </Route>
-        </Route>
+          </Route>
+          </Route>
         {/* End of Dashboard Layout or End of Protected Routes*/}
       </Route>
     </Routes>

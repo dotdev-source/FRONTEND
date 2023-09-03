@@ -12,7 +12,6 @@ export const teachersApiSlice = apiSlice.injectEndpoints({
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
-      keepUnusedDataFor: 7,
       transformResponse: (responseData) => {
         const loadedTeachers = responseData.map((teacher) => {
           teacher.id = teacher._id;

@@ -1,9 +1,49 @@
-import React from 'react'
+import React from "react";
+import { useGetStudentsQuery } from "./studentsApiSlice";
+import Student from "./student";
 
-const Teachers = () => {
-  return (
-    <div>Teachers</div>
-  )
-}
+const Students = () => {
+  const {
+    data: students,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetStudentsQuery(undefined, {
+    pollingInterval: 60000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true
+});
 
-export default Teachers
+    let content;
+
+    if (isLoading) {content = <p>Loading</p> }
+    if (isError) { content = <p>{error?.data?.message}</p>}
+    if (isSuccess) {
+
+        const { ids } = students
+
+        const tableContent = ids?.length
+            ? ids.map(studentId => <Student key={studentId} studentId={studentId} />)
+            : null
+
+        content = (
+            <table className="table table--students">
+                <thead className="table__thead">
+                    <tr>
+                        <th >Full Name</th>
+                        <th>Classe</th>
+                        <th >House</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tableContent}
+                </tbody>
+            </table>
+        )
+    }
+
+    return content
+};
+
+export default Students;
