@@ -4,10 +4,10 @@ import DashboardHome from "./features/auth/Home";
 import Login from "./features/auth/Login";
 import DashboardLayout from "./components/DashboardLayout";
 import Students from "./features/students/Students";
-import AddNewStudent from "./components/NewStudentForm";
-import EditTeacher from "./components/EditTeacher";
+import AddNewStudent from "./features/students/NewStudentForm";
+import EditTeacher from "./features/teachers/EditTeacher";
 import Teachers from "./features/teachers/Teachers";
-import AddNewTeacher from "./components/NewTeacherForm";
+import AddNewTeacher from "./features/teachers/NewTeacherForm";
 import Signup from "./features/auth/Signup";
 import EditStudent from "./features/students/EditStudent";
 import Prefetch from "./features/auth/Prefetch";
@@ -16,7 +16,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        {/* <Route index element={<Home />} /> */}
+        <Route index element={<DashboardHome />} />
         <Route path="signup" element={<Signup />} />
         <Route path="login" element={<Login />} />
 
@@ -27,16 +27,16 @@ function App() {
 
           <Route path="/dashboard/teachers">
             <Route index element={<Teachers />} />
-            <Route path="/:id" element={<EditTeacher />} />
-            <Route path="/new" element={<AddNewTeacher />} />
+            {/* <Route path="/:id" element={<EditTeacher />} /> */}
+            {/* <Route path="/new" element={<AddNewTeacher />} /> */}
 
           </Route>
 
           
           <Route path="/dashboard/students">
             <Route index element={<Students />} />
-            <Route path="/:id" element={<EditStudent />} />
-            <Route path="/new" element={<AddNewStudent  />} />
+            {/* <Route path="/:id" element={<EditStudent />} /> */}
+            {/* <Route path="/new" element={<AddNewStudent  />} /> */}
           </Route>
           </Route>
           </Route>

@@ -1,15 +1,15 @@
 import React from "react";
-import { useGetStudentsQuery } from "./studentsApiSlice";
-import Student from "./student";
+import { useGetTeachersQuery } from "./teachersApiSlice";
+import Teachers from "./Teachers";
 
-const Students = () => {
+const Teacherss = () => {
   const {
-    data: students,
+    data: teachers,
     isLoading,
     isSuccess,
     isError,
     error,
-  } = useGetStudentsQuery(undefined, {
+  } = useGetTeachersQuery(undefined, {
     pollingInterval: 60000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true
@@ -21,14 +21,14 @@ const Students = () => {
     if (isError) { content = <p>{error?.data?.message}</p>}
     if (isSuccess) {
 
-        const { ids } = students
+        const { ids } = teachers
 
         const tableContent = ids?.length
-            ? ids.map(studentId => <Student key={studentId} studentId={studentId} />)
+            ? ids.map(teacherId => <Teachers key={teacherId} teachersId={teacherId} />)
             : null
 
         content = (
-            <table className="table table--students">
+            <table className="table table--teacherss">
                 <thead className="table__thead">
                     <tr>
                         <th >Full Name</th>
@@ -46,4 +46,4 @@ const Students = () => {
     return content
 };
 
-export default Students;
+export default Teacherss;

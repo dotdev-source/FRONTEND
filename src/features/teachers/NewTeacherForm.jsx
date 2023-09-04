@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useAddNewUserMutation } from "./usersApiSlice";
+import { useAddNewTeacherMutation } from "./teachersApiSlice";
 import { useNavigate } from "react-router-dom";
 import { ROLES } from "../../config/roles";
 
@@ -8,8 +8,8 @@ const FULLNAME_REGEX = /^[A-z]{3,20}$/;
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
 
 const NewTeacherForm = () => {
-  const [addNewUser, { isLoading, isSuccess, isError, error }] =
-    useAddNewUserMutation();
+  const [addNewTeacher, { isLoading, isSuccess, isError, error }] =
+    useAddNewTeacherMutation();
 
   const navigate = useNavigate();
 
@@ -50,10 +50,10 @@ const NewTeacherForm = () => {
   const canSave =
     [roles.length, validFullname, validPassword].every(Boolean) && !isLoading;
 
-  const onSaveUserClicked = async (e) => {
+  const onSaveTeacherClicked = async (e) => {
     e.preventDefault();
     if (canSave) {
-      await addNewUser({ fullname, password, roles });
+      await addNewTeacher({ fullname, password, roles });
     }
   };
 
@@ -74,7 +74,7 @@ const NewTeacherForm = () => {
         <>
             <p className={errClass}>{error?.data?.message}</p>
 
-            <form className="form" onSubmit={onSaveUserClicked}>
+            <form className="form" onSubmit={onSaveTeacherClicked}>
                 <div className="form__title-row">
                     <h2>New Teacher</h2>
                     <div className="form__action-buttons">
@@ -87,12 +87,12 @@ const NewTeacherForm = () => {
                         </button>
                     </div>
                 </div>
-                <label className="form__label" htmlFor="username">
-                    Username: <span className="nowrap">[3-20 letters]</span></label>
+                <label className="form__label" htmlFor="teachername">
+                    Teachername: <span className="nowrap">[3-20 letters]</span></label>
                 <input
                     className={`form__input ${validFullnameClass}`}
-                    id="username"
-                    name="username"
+                    id="teachername"
+                    name="teachername"
                     type="text"
                     autoComplete="off"
                     value={fullname}

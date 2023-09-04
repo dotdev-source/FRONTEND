@@ -88,8 +88,8 @@ const Login = () => {
                     <button className="form__submit-button">Sign In</button>
                 </form>
             </main>
-            <p>Don/t have an account
-                <Link to="/signup">Signup here</Link>
+            <p>Don't have an account {" "}
+                <Link to="/signup">signup here</Link>
             </p>
         </section>
     )

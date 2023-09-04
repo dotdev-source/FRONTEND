@@ -1,26 +1,26 @@
 import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import { selectStudentsById } from "./studentsApiSlice";
+import { selectTeachersById } from "./teachersApiSlice";
 
-const Student = ({ studentId }) => {
-  const student = useSelector((state) => selectStudentsById(state, studentId));
+const Teacher = ({ teacherId }) => {
+  const teacher = useSelector((state) => selectTeachersById(state, teacherId));
 
   const navigate = useNavigate();
 
-  if (student) {
-    const handleEdit = () => navigate(`/dash/students/${studentId}`);
+  if (teacher) {
+    const handleEdit = () => navigate(`/dashboard/teachers/${teacherId}`);
 
-    const studentRolesString = student.roles.toString().replaceAll(",", ", ");
+    const teacherRolesString = teacher.roles.toString().replaceAll(",", ", ");
 
-    // const paymentStatus = student.paid ? "" : "table__cell--inactive";
+    // const paymentStatus = teacher.paid ? "" : "table__cell--inactive";
 
     return (
-      <tr className="table__row student">
-        <td>{student.studentname}</td>
-        <td>{studentRolesString}</td>
+      <tr className="table__row teacher">
+        <td>{teacher.teachername}</td>
+        <td>{teacherRolesString}</td>
       </tr>
     );
   } else return null;
 };
-export default Student;
+export default Teacher;

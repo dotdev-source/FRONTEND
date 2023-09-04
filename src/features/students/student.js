@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import { selectStudentsById } from "./studentsApiSlice";
+import { selectStudentById } from "./studentsApiSlice";
 
 const Student = ({ studentId }) => {
-  const student = useSelector((state) => selectStudentsById(state, studentId));
+  const student = useSelector((state) => selectStudentById(state, studentId));
 
   const navigate = useNavigate();
 

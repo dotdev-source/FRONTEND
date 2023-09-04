@@ -79,8 +79,8 @@ const selectStudentsData = createSelector(
 //getSelectors creates these selectors and we rename them with aliases using destructuring
 export const {
   selectAll: selectAllStudents,
-  selectById: selectStudentsById,
-  selectIds: selectStudentsIds,
+  selectById: selectStudentById,
+  selectIds: selectStudentIds,
   // Pass in a selector that returns the users slice of state
 } = studentsAdapter.getSelectors(
   (state) => selectStudentsData(state) ?? initialState
