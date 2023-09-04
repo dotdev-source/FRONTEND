@@ -88,9 +88,9 @@ const Login = () => {
                     <button className="form__submit-button">Sign In</button>
                 </form>
             </main>
-            <footer>
-                <Link to="/">Back to Home</Link>
-            </footer>
+            <p>Don/t have an account
+                <Link to="/signup">Signup here</Link>
+            </p>
         </section>
     )
 
