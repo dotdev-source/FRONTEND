@@ -33,7 +33,7 @@ const Login = () => {
             dispatch(setCredentials({ accessToken }))
             setEmail('')
             setPassword('')
-            navigate('/dash')
+            navigate('/dashboard')
         } catch (err) {
             if (!err.status) {
                 setErrMsg('No Server Response');
@@ -48,7 +48,7 @@ const Login = () => {
         }
     }
 
-    const handleUserInput = (e) => setEmail(e.target.value)
+    const handleEmailInput = (e) => setEmail(e.target.value)
     const handlePwdInput = (e) => setPassword(e.target.value)
 
     const errClass = errMsg ? "errmsg" : "offscreen"
@@ -71,7 +71,7 @@ const Login = () => {
                         id="email"
                         ref={emailRef}
                         value={email}
-                        onChange={handleUserInput}
+                        onChange={handleEmailInput}
                         autoComplete="off"
                         required
                     />

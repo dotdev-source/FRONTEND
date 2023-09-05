@@ -27,16 +27,16 @@ function App() {
 
           <Route path="/dashboard/teachers">
             <Route index element={<Teachers />} />
-            {/* <Route path="/:id" element={<EditTeacher />} /> */}
-            {/* <Route path="/new" element={<AddNewTeacher />} /> */}
+            <Route path="/:id" element={<EditTeacher />} />
+            <Route path="/new" element={<AddNewTeacher />} />
 
           </Route>
 
           
           <Route path="/dashboard/students">
             <Route index element={<Students />} />
-            {/* <Route path="/:id" element={<EditStudent />} /> */}
-            {/* <Route path="/new" element={<AddNewStudent  />} /> */}
+            <Route path="/:id" element={<EditStudent />} />
+            <Route path="/new" element={<AddNewStudent  />} />
           </Route>
           </Route>
           </Route>
