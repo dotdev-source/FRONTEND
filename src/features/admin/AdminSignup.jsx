@@ -48,7 +48,7 @@ const NewTeacherForm = () => {
       setFullname("");
       setPassword("");
       setRoles([]);
-      navigate("/dashboard/teachers");
+      navigate("/createSchool");
     }
   }, [isSuccess, navigate]);
 
@@ -105,13 +105,7 @@ const NewTeacherForm = () => {
       <form className="form" onSubmit={onSaveAdminClicked}>
         <div className="form__title-row">
           <h2>Create Account</h2>
-          <div className="form__action-buttons">
-            <button
-              className="icon-button"
-              title="Save"
-              disabled={!canSave}
-            >signup</button>
-          </div>
+          
         </div>
         <label className="form__label" htmlFor="fullname">
           Full Name: 
@@ -182,6 +176,14 @@ const NewTeacherForm = () => {
         >
           {options}
         </select>
+
+        <div className="form__action-buttons">
+            <button
+              className="icon-button"
+              title="Save"
+              disabled={!canSave}
+            >signup</button>
+          </div>
       </form>
     </>
   );
