@@ -8,7 +8,7 @@ const initialState = adminAdapter.getInitialState();
 export const adminApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAdmin: builder.query({
-      query: () => "/admin",
+      query: () => "/admins",
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
@@ -30,7 +30,7 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     }),
     addNewAdmin: builder.mutation({
       query: (initialAdmin) => ({
-        url: "/admin",
+        url: "admins/register",
         method: "POST",
         body: { ...initialAdmin },
       }),
