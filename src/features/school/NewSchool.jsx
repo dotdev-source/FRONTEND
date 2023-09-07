@@ -1,137 +1,147 @@
-import { useState, useEffect } from "react"
-import { useAddNewSchoolMutation } from "./schoolApiSlice"
-import { useNavigate } from "react-router-dom"
-import { ROLES } from "../../config/roles"
+import { useState, useEffect } from "react";
+import { useAddNewSchoolMutation } from "./schoolApiSlice";
+import { useNavigate } from "react-router-dom";
 
-
+const FIELDS_REGEX = /^[a-z ,.'-]+$/i;
 
 const NewSchool = () => {
+  const [addNewSchool, { isLoading, isSuccess, isError, error }] =
+    useAddNewSchoolMutation();
 
-    const [addNewSchool, {
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    }] = useAddNewSchoolMutation()
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  const [schoolname, setSchoolname] = useState("");
+  const [validSchoolname, setValidSchoolname] = useState(false);
+  const [regNo, setRegNo] = useState("");
+  const [validRegNo, setValidRegNo] = useState(false);
+  const [schoolType, setSchoolType] = useState("");
+  const [validSchoolType, setValidSchoolType] = useState(false);
+    const [address, setAddress] = useState("")
+    const [validAddress, setValidAddress] = useState(false)
+    
+  useEffect(() => {
+    setValidSchoolname(FIELDS_REGEX.test(schoolname));
+  }, [schoolname]);
 
-    const [studentname, setStudentname] = useState('')
-    const [validStudentname, setValidStudentname] = useState(false)
-    const [password, setPassword] = useState('')
-    const [validPassword, setValidPassword] = useState(false)
-    const [roles, setRoles] = useState(["Employee"])
+  useEffect(() => {
+    setValidRegNo(FIELDS_REGEX.test(regNo));
+  }, [regNo]);
 
-    useEffect(() => {
-        setValidStudentname(STUDENT_REGEX.test(studentname))
-    }, [studentname])
+  useEffect(() => {
+    setValidSchoolType(FIELDS_REGEX.test(schoolType));
+  }, [schoolType]);
 
-    useEffect(() => {
-        setValidPassword(PWD_REGEX.test(password))
-    }, [password])
+  useEffect(() => {
+    setValidRegNo(FIELDS_REGEX.test(regNo));
+  }, [regNo]);
+    
+  useEffect(() => {
+    setValidAddress(FIELDS_REGEX.test(address));
+  }, [address]);
 
-    useEffect(() => {
-        if (isSuccess) {
-            setStudentname('')
-            setPassword('')
-            setRoles([])
-            navigate('/dashboard')
-        }
-    }, [isSuccess, navigate])
-
-    const onStudentnameChanged = e => setStudentname(e.target.value)
-    const onPasswordChanged = e => setPassword(e.target.value)
-
-    const onRolesChanged = e => {
-        const values = Array.from(
-            e.target.selectedOptions, //HTMLCollection 
-            (option) => option.value
-        )
-        setRoles(values)
+  useEffect(() => {
+    if (isSuccess) {
+      setSchoolname("");
+        setRegNo("");
+        setSchoolType("");
+        setAddress("");
+      navigate("/dashboard");
     }
+  }, [isSuccess, navigate]);
 
-    const canSave = [roles.length, validStudentname, validPassword].every(Boolean) && !isLoading
+  const onSchoolnameChanged = (e) => setSchoolname(e.target.value);
+    const onRegNoChanged = (e) => setRegNo(e.target.value);
+    const onSchoolTypeChanged = (e) => setSchoolType(e.target.value);
+  const onAddressChanged = (e) => setAddress(e.target.value);
 
-    const onSaveStudentClicked = async (e) => {
-        e.preventDefault()
-        if (canSave) {
-            await addNewStudent({ studentname, password, roles })
-        }
+
+
+
+
+  const canSave =
+    [validSchoolname, validRegNo, validSchoolType, validAddress ].every(Boolean) && !isLoading;
+
+  const onSaveSchoolClicked = async (e) => {
+    e.preventDefault();
+    if (canSave) {
+      await addNewSchool({ schoolname, regNo, schoolType, address });
     }
-
-    const options = Object.values(ROLES).map(role => {
-        return (
-            <option
-                key={role}
-                value={role}
-
-            > {role}</option >
-        )
-    })
-
-    const errClass = isError ? "errmsg" : "offscreen"
-    const validStudentClass = !validStudentname ? 'form__input--incomplete' : ''
-    const validPwdClass = !validPassword ? 'form__input--incomplete' : ''
-    const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
+  };
 
 
-    const content = (
-        <>
-            <p className={errClass}>{error?.data?.message}</p>
+  const errClass = isError ? "errmsg" : "offscreen";
+  const validSchoolClass = !validSchoolname ? "form__input--incomplete" : "";
+  const validPwdClass = !validRegNo ? "form__input--incomplete" : "";
+  
+  const content = (
+    <>
+      <p className={errClass}>{error?.data?.message}</p>
 
-            <form className="form" onSubmit={onSaveStudentClicked}>
-                <div className="form__title-row">
-                    <h2>New Student</h2>
-                    <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            disabled={!canSave}
-                        >
-                        </button>
-                    </div>
-                </div>
-                <label className="form__label" htmlFor="studentname">
-                    Studentname: <span className="nowrap">[3-20 letters]</span></label>
-                <input
-                    className={`form__input ${validStudentClass}`}
-                    id="studentname"
-                    name="studentname"
-                    type="text"
-                    autoComplete="off"
-                    value={studentname}
-                    onChange={onStudentnameChanged}
-                />
+      <form className="form" onSubmit={onSaveSchoolClicked}>
+        <div className="form__title-row">
+          <h2>New School</h2>
+         
+        </div>
+        <label className="form__label" htmlFor="schoolname">
+          Schoolname: 
+        </label>
+        <input
+          className={`form__input ${validSchoolClass}`}
+          id="schoolname"
+          name="schoolname"
+          type="text"
+          autoComplete="off"
+          value={schoolname}
+          onChange={onSchoolnameChanged}
+        />
 
-                <label className="form__label" htmlFor="password">
-                    Password: <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
-                <input
-                    className={`form__input ${validPwdClass}`}
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={onPasswordChanged}
-                />
+        <label className="form__label" htmlFor="regNo">
+          RegNo: 
+        </label>
+        <input
+          className={`form__input ${validPwdClass}`}
+          id="regNo"
+          name="regNo"
+          type="text"
+          value={regNo}
+          onChange={onRegNoChanged}
+              />
+              
+              <label className="form__label" htmlFor="schoolType">
+          School Type: 
+        </label>
+        <input
+          className={`form__input ${validPwdClass}`}
+          id="schoolType"
+          name="schoolType"
+          type="text"
+          value={schoolType}
+          onChange={onSchoolTypeChanged}
+              />
+              
+              <label className="form__label" htmlFor="address">
+          School Address: 
+        </label>
+        <input
+          className={`form__input ${validPwdClass}`}
+          id="address"
+          name="address"
+          type="text"
+          value={address}
+          onChange={onAddressChanged}
+        />
+ <div className="form__action-buttons">
+            <button
+              className="icon-button"
+              title="Save"
+              disabled={!canSave}
+            ></button>
+          </div>
+        
+      </form>
+    </>
+  );
 
-                <label className="form__label" htmlFor="roles">
-                    ASSIGNED ROLES:</label>
-                <select
-                    id="roles"
-                    name="roles"
-                    className={`form__select ${validRolesClass}`}
-                    multiple={true}
-                    size="3"
-                    value={roles}
-                    onChange={onRolesChanged}
-                >
-                    {options}
-                </select>
-
-            </form>
-        </>
-    )
-
-    return content
-}
-export default NewSchool
+  return content;
+};
+export default NewSchool;
