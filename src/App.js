@@ -11,6 +11,8 @@ import AddNewTeacher from "./features/teachers/NewTeacherForm";
 import AdminSignup from "./features/admin/AdminSignup";
 import EditStudent from "./features/students/EditStudent";
 import Prefetch from "./features/auth/Prefetch";
+import NewSchool from "./features/school/NewSchool";
+import EditSchool from "./features/school/EditSchool"
 
 function App() {
   return (
@@ -23,7 +25,15 @@ function App() {
         {/* Begining of Dashboard Layout or protected routes */}
         <Route element={<Prefetch />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<DashboardHome />} />
+            <Route index element={<DashboardHome />} />
+            
+            <Route path="/dashboard/schools">
+            <Route index element={<Teachers />} />
+            
+              <Route path="schools/new" element={<NewSchool />} />
+              <Route path="schools/:id" element={<EditSchool />} />
+
+          </Route>
 
           <Route path="/dashboard/teachers">
             <Route index element={<Teachers />} />

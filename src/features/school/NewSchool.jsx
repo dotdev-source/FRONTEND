@@ -1,99 +1,137 @@
-import { useRef, useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useState, useEffect } from "react"
+import { useAddNewSchoolMutation } from "./schoolApiSlice"
+import { useNavigate } from "react-router-dom"
+import { ROLES } from "../../config/roles"
 
-import { useDispatch } from 'react-redux'
-import { setCredentials } from './authSlice'
-import { useLoginMutation } from './authApiSlice'
+
 
 const NewSchool = () => {
-    const schoolNameRef = useRef()
-    const errRef = useRef()
-    const [schoolName, setSchoolName] = useState('')
-    const [schoolType, setSchoolType] = useState('')
-    const [regNo, setRegNo] = useState('')
-    const [schoolAddress, setSchoolAddress] = useState('')
-    const [errMsg, setErrMsg] = useState('')
+
+    const [addNewSchool, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useAddNewSchoolMutation()
 
     const navigate = useNavigate()
-    const dispatch = useDispatch()
 
-    const [login, { isLoading }] = useLoginMutation()
+    const [studentname, setStudentname] = useState('')
+    const [validStudentname, setValidStudentname] = useState(false)
+    const [password, setPassword] = useState('')
+    const [validPassword, setValidPassword] = useState(false)
+    const [roles, setRoles] = useState(["Employee"])
 
     useEffect(() => {
-        schoolNameRef.current.focus()
-    }, [])
+        setValidStudentname(STUDENT_REGEX.test(studentname))
+    }, [studentname])
 
     useEffect(() => {
-        setErrMsg('');
-    }, [schoolName, schoolType, regNo, schoolAddress])
+        setValidPassword(PWD_REGEX.test(password))
+    }, [password])
 
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        try {
-            const { accessToken } = await login({ schoolName, schoolType })
-            dispatch(setCredentials({ accessToken }))
-            setSchoolName('')
-            setSchoolType('')
+    useEffect(() => {
+        if (isSuccess) {
+            setStudentname('')
+            setPassword('')
+            setRoles([])
             navigate('/dashboard')
-        } catch (err) {
-            if (!err.status) {
-                setErrMsg('No Server Response');
-            } else if (err.status === 400) {
-                setErrMsg('Missing SchoolName or SchoolType');
-            } else if (err.status === 401) {
-                setErrMsg('Unauthorized');
-            } else {
-                setErrMsg(err.data?.message);
-            }
-            errRef.current.focus();
+        }
+    }, [isSuccess, navigate])
+
+    const onStudentnameChanged = e => setStudentname(e.target.value)
+    const onPasswordChanged = e => setPassword(e.target.value)
+
+    const onRolesChanged = e => {
+        const values = Array.from(
+            e.target.selectedOptions, //HTMLCollection 
+            (option) => option.value
+        )
+        setRoles(values)
+    }
+
+    const canSave = [roles.length, validStudentname, validPassword].every(Boolean) && !isLoading
+
+    const onSaveStudentClicked = async (e) => {
+        e.preventDefault()
+        if (canSave) {
+            await addNewStudent({ studentname, password, roles })
         }
     }
 
-    const handleSchoolNameInput = (e) => setSchoolName(e.target.value)
-    const handlePwdInput = (e) => setSchoolType(e.target.value)
+    const options = Object.values(ROLES).map(role => {
+        return (
+            <option
+                key={role}
+                value={role}
 
-    const errClass = errMsg ? "errmsg" : "offscreen"
+            > {role}</option >
+        )
+    })
 
-    if (isLoading) return <p>Loading...</p>
+    const errClass = isError ? "errmsg" : "offscreen"
+    const validStudentClass = !validStudentname ? 'form__input--incomplete' : ''
+    const validPwdClass = !validPassword ? 'form__input--incomplete' : ''
+    const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : ''
+
 
     const content = (
-        <section className="public">
-            <header>
-                <h3>Create School</h3>
-            </header>
-            <main className="login">
-                <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+        <>
+            <p className={errClass}>{error?.data?.message}</p>
 
-                <form className="form" onSubmit={handleSubmit}>
-                    <label htmlFor="schoolName">SchoolName Address</label>
-                    <input
-                        className="form__input"
-                        type="text"
-                        id="schoolName"
-                        ref={schoolNameRef}
-                        value={schoolName}
-                        onChange={handleSchoolNameInput}
-                        autoComplete="off"
-                        required
-                    />
+            <form className="form" onSubmit={onSaveStudentClicked}>
+                <div className="form__title-row">
+                    <h2>New Student</h2>
+                    <div className="form__action-buttons">
+                        <button
+                            className="icon-button"
+                            title="Save"
+                            disabled={!canSave}
+                        >
+                        </button>
+                    </div>
+                </div>
+                <label className="form__label" htmlFor="studentname">
+                    Studentname: <span className="nowrap">[3-20 letters]</span></label>
+                <input
+                    className={`form__input ${validStudentClass}`}
+                    id="studentname"
+                    name="studentname"
+                    type="text"
+                    autoComplete="off"
+                    value={studentname}
+                    onChange={onStudentnameChanged}
+                />
 
-                    <label htmlFor="schoolType">SchoolType:</label>
-                    <input
-                        className="form__input"
-                        type="schoolType"
-                        id="schoolType"
-                        onChange={handlePwdInput}
-                        value={schoolType}
-                        required
-                    />
-                    <button className="form__submit-button">Sign In</button>
-                </form>
-            </main>
-            
-        </section>
+                <label className="form__label" htmlFor="password">
+                    Password: <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
+                <input
+                    className={`form__input ${validPwdClass}`}
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={password}
+                    onChange={onPasswordChanged}
+                />
+
+                <label className="form__label" htmlFor="roles">
+                    ASSIGNED ROLES:</label>
+                <select
+                    id="roles"
+                    name="roles"
+                    className={`form__select ${validRolesClass}`}
+                    multiple={true}
+                    size="3"
+                    value={roles}
+                    onChange={onRolesChanged}
+                >
+                    {options}
+                </select>
+
+            </form>
+        </>
     )
 
     return content
 }
-export default NewSchool;
+export default NewSchool
