@@ -71,7 +71,10 @@ const NewSchool = () => {
 
   const errClass = isError ? "errmsg" : "offscreen";
   const validSchoolClass = !validSchoolname ? "form__input--incomplete" : "";
-  const validPwdClass = !validRegNo ? "form__input--incomplete" : "";
+    const validRegNoClass = !validRegNo ? "form__input--incomplete" : "";
+    const validSchoolTypeClass = !validSchoolType ? "form__input--incomplete" : "";
+    const validAddressClass = !validAddress ? "form__input--incomplete" : "";
+
   
   const content = (
     <>
@@ -79,7 +82,7 @@ const NewSchool = () => {
 
       <form className="form" onSubmit={onSaveSchoolClicked}>
         <div className="form__title-row">
-          <h2>New School</h2>
+          <h2>CreateNew School</h2>
          
         </div>
         <label className="form__label" htmlFor="schoolname">
@@ -99,7 +102,7 @@ const NewSchool = () => {
           RegNo: 
         </label>
         <input
-          className={`form__input ${validPwdClass}`}
+          className={`form__input ${validRegNoClass}`}
           id="regNo"
           name="regNo"
           type="text"
@@ -111,7 +114,7 @@ const NewSchool = () => {
           School Type: 
         </label>
         <input
-          className={`form__input ${validPwdClass}`}
+          className={`form__input ${validSchoolTypeClass}`}
           id="schoolType"
           name="schoolType"
           type="text"
@@ -123,7 +126,7 @@ const NewSchool = () => {
           School Address: 
         </label>
         <input
-          className={`form__input ${validPwdClass}`}
+          className={`form__input ${validAddressClass}`}
           id="address"
           name="address"
           type="text"
@@ -135,7 +138,7 @@ const NewSchool = () => {
               className="icon-button"
               title="Save"
               disabled={!canSave}
-            ></button>
+            >Create</button>
           </div>
         
       </form>
