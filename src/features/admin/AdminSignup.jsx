@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { ROLES } from "../../config/roles";
 
 const FULLNAME_REGEX = /^[a-z ,.'-]+$/i;
+const EMAIL_REGEX = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
 const PHONE_REGEX =
   /^(\+234|234|0)(701|702|703|704|705|706|707|708|709|802|803|804|805|806|807|808|809|810|811|812|813|814|815|816|817|818|819|909|908|901|902|903|904|905|906|907)([0-9]{7})$/;
-const EMAIL_REGEX = /^[A-Z0-9+_.-]+@[A-Z0-9.-]+$/
 
-const NewTeacherForm = () => {
+const NewAdminForm = () => {
   const [addNewAdmin, { isLoading, isSuccess, isError, error }] =
     useAddNewAdminMutation();
 
@@ -18,12 +18,12 @@ const NewTeacherForm = () => {
 
   const [fullname, setFullname] = useState("");
   const [validFullname, setValidFullname] = useState(false);
+  const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [validPhoneNumber, setValidPhoneNumber] = useState(false);
-  const [email, setEmail] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
 
   const [roles, setRoles] = useState(["admin"]);
 
@@ -46,7 +46,10 @@ const NewTeacherForm = () => {
   useEffect(() => {
     if (isSuccess) {
       setFullname("");
+      setEmail("");
       setPassword("");
+      setPhoneNumber("");
+
       setRoles([]);
       navigate("/schools/new");
     }
@@ -56,7 +59,6 @@ const NewTeacherForm = () => {
   const onPasswordChanged = (e) => setPassword(e.target.value);
   const onPhoneNumberChanged = (e) => setPhoneNumber(e.target.value);
   const onEmailChanged = (e) => setEmail(e.target.value);
-
   const onRolesChanged = (e) => {
     const values = Array.from(
       e.target.selectedOptions, //HTMLCollection
@@ -77,7 +79,7 @@ const NewTeacherForm = () => {
   const onSaveAdminClicked = async (e) => {
     e.preventDefault();
     if (canSave) {
-      await addNewAdmin({ fullname, password,phoneNumber, email, roles });
+      await addNewAdmin({ fullname, password, phoneNumber, email, roles });
     }
   };
 
@@ -91,8 +93,10 @@ const NewTeacherForm = () => {
 
   const errClass = isError ? "errmsg" : "offscreen";
   const validFullnameClass = !validFullname ? "form__input--incomplete" : "";
-    const validPwdClass = !validPassword ? "form__input--incomplete" : "";
-    const validPhoneNumberClass = !validPhoneNumber ? "form__input--incomplete" : "";
+  const validPwdClass = !validPassword ? "form__input--incomplete" : "";
+  const validPhoneNumberClass = !validPhoneNumber
+    ? "form__input--incomplete"
+    : "";
   const validEmailClass = !validEmail ? "form__input--incomplete" : "";
   const validRolesClass = !Boolean(roles.length)
     ? "form__input--incomplete"
@@ -105,10 +109,14 @@ const NewTeacherForm = () => {
       <form className="form" onSubmit={onSaveAdminClicked}>
         <div className="form__title-row">
           <h2>Create Account</h2>
-          
+          <div className="form__action-buttons">
+            <button className="icon-button" title="Save" disabled={!canSave}>
+              signup
+            </button>
+          </div>
         </div>
         <label className="form__label" htmlFor="fullname">
-          Full Name: 
+          Full Name:
         </label>
         <input
           className={`form__input ${validFullnameClass}`}
@@ -118,10 +126,10 @@ const NewTeacherForm = () => {
           autoComplete="off"
           value={fullname}
           onChange={onFullnameChanged}
-              />
-              
-              <label className="form__label" htmlFor="email">
-        Email: 
+        />
+
+        <label className="form__label" htmlFor="email">
+          Email:
         </label>
         <input
           className={`form__input ${validEmailClass}`}
@@ -131,24 +139,23 @@ const NewTeacherForm = () => {
           autoComplete="off"
           value={email}
           onChange={onEmailChanged}
-              />
-        
-              
-              <label className="form__label" htmlFor="phoneNumber">
-          Phone Number: 
+        />
+
+        <label className="form__label" htmlFor="phoneNumber">
+          Phone Number:
         </label>
         <input
           className={`form__input ${validPhoneNumberClass}`}
           id="phoneNumber"
           name="phoneNumber"
-          type="tel"
+          type="text"
           autoComplete="off"
           value={phoneNumber}
           onChange={onPhoneNumberChanged}
-              />
+        />
 
-<label className="form__label" htmlFor="password">
-          Password: 
+        <label className="form__label" htmlFor="password">
+          Password:
         </label>
         <input
           className={`form__input ${validPwdClass}`}
@@ -157,11 +164,7 @@ const NewTeacherForm = () => {
           type="password"
           value={password}
           onChange={onPasswordChanged}
-              />
-              
-
-              
-
+        />
         <label className="form__label" htmlFor="roles">
           ASSIGNED ROLES:
         </label>
@@ -176,14 +179,6 @@ const NewTeacherForm = () => {
         >
           {options}
         </select>
-
-        <div className="form__action-buttons">
-            <button
-              className="icon-button"
-              title="Save"
-              disabled={!canSave}
-            >signup</button>
-          </div>
       </form>
     </>
   );
@@ -191,4 +186,4 @@ const NewTeacherForm = () => {
   return content;
 };
 
-export default NewTeacherForm;
+export default NewAdminForm;
