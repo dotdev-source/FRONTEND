@@ -30,7 +30,7 @@ export const schoolApiSlice = apiSlice.injectEndpoints({
     }),
     addNewSchool: builder.mutation({
       query: (initilaSchoolData) => ({
-        url: "/school",
+        url: "schools/create",
         method: "POST",
         body: { ...initilaSchoolData },
       }),

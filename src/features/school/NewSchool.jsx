@@ -10,18 +10,18 @@ const NewSchool = () => {
 
   const navigate = useNavigate();
 
-  const [schoolname, setSchoolname] = useState("");
-  const [validSchoolname, setValidSchoolname] = useState(false);
+  const [schoolName, setSchoolName] = useState("");
+  const [validSchoolName, setValidSchoolName] = useState(false);
   const [regNo, setRegNo] = useState("");
   const [validRegNo, setValidRegNo] = useState(false);
   const [schoolType, setSchoolType] = useState("");
   const [validSchoolType, setValidSchoolType] = useState(false);
-    const [address, setAddress] = useState("")
-    const [validAddress, setValidAddress] = useState(false)
-    
+  const [address, setAddress] = useState("");
+  const [validAddress, setValidAddress] = useState(false);
+
   useEffect(() => {
-    setValidSchoolname(FIELDS_REGEX.test(schoolname));
-  }, [schoolname]);
+    setValidSchoolName(FIELDS_REGEX.test(schoolName));
+  }, [schoolName]);
 
   useEffect(() => {
     setValidRegNo(FIELDS_REGEX.test(regNo));
@@ -34,48 +34,47 @@ const NewSchool = () => {
   useEffect(() => {
     setValidRegNo(FIELDS_REGEX.test(regNo));
   }, [regNo]);
-    
+
   useEffect(() => {
     setValidAddress(FIELDS_REGEX.test(address));
   }, [address]);
 
   useEffect(() => {
     if (isSuccess) {
-      setSchoolname("");
-        setRegNo("");
-        setSchoolType("");
-        setAddress("");
+      setSchoolName("");
+      setRegNo("");
+      setSchoolType("");
+      setAddress("");
+
       navigate("/dashboard");
     }
   }, [isSuccess, navigate]);
 
-  const onSchoolnameChanged = (e) => setSchoolname(e.target.value);
-    const onRegNoChanged = (e) => setRegNo(e.target.value);
-    const onSchoolTypeChanged = (e) => setSchoolType(e.target.value);
+  const onSchoolNameChanged = (e) => setSchoolName(e.target.value);
+  const onRegNoChanged = (e) => setRegNo(e.target.value);
+  const onSchoolTypeChanged = (e) => setSchoolType(e.target.value);
   const onAddressChanged = (e) => setAddress(e.target.value);
 
-
-
-
-
   const canSave =
-    [validSchoolname, validRegNo, validSchoolType, validAddress ].every(Boolean) && !isLoading;
+    [validSchoolName, validRegNo, validSchoolType, validAddress].every(
+      Boolean
+    ) && !isLoading;
 
   const onSaveSchoolClicked = async (e) => {
     e.preventDefault();
     if (canSave) {
-      await addNewSchool({ schoolname, regNo, schoolType, address });
+      await addNewSchool({ schoolName, regNo, schoolType, address });
     }
   };
 
-
   const errClass = isError ? "errmsg" : "offscreen";
-  const validSchoolClass = !validSchoolname ? "form__input--incomplete" : "";
-    const validRegNoClass = !validRegNo ? "form__input--incomplete" : "";
-    const validSchoolTypeClass = !validSchoolType ? "form__input--incomplete" : "";
-    const validAddressClass = !validAddress ? "form__input--incomplete" : "";
+  const validSchoolClass = !validSchoolName ? "form__input--incomplete" : "";
+  const validRegNoClass = !validRegNo ? "form__input--incomplete" : "";
+  const validSchoolTypeClass = !validSchoolType
+    ? "form__input--incomplete"
+    : "";
+  const validAddressClass = !validAddress ? "form__input--incomplete" : "";
 
-  
   const content = (
     <>
       <p className={errClass}>{error?.data?.message}</p>
@@ -83,23 +82,22 @@ const NewSchool = () => {
       <form className="form" onSubmit={onSaveSchoolClicked}>
         <div className="form__title-row">
           <h2>CreateNew School</h2>
-         
         </div>
-        <label className="form__label" htmlFor="schoolname">
-          Schoolname: 
+        <label className="form__label" htmlFor="schoolName">
+          SchoolName:
         </label>
         <input
           className={`form__input ${validSchoolClass}`}
-          id="schoolname"
-          name="schoolname"
+          id="schoolName"
+          name="schoolName"
           type="text"
           autoComplete="off"
-          value={schoolname}
-          onChange={onSchoolnameChanged}
+          value={schoolName}
+          onChange={onSchoolNameChanged}
         />
 
         <label className="form__label" htmlFor="regNo">
-          RegNo: 
+          RegNo:
         </label>
         <input
           className={`form__input ${validRegNoClass}`}
@@ -108,10 +106,10 @@ const NewSchool = () => {
           type="text"
           value={regNo}
           onChange={onRegNoChanged}
-              />
-              
-              <label className="form__label" htmlFor="schoolType">
-          School Type: 
+        />
+
+        <label className="form__label" htmlFor="schoolType">
+          School Type:
         </label>
         <input
           className={`form__input ${validSchoolTypeClass}`}
@@ -120,10 +118,10 @@ const NewSchool = () => {
           type="text"
           value={schoolType}
           onChange={onSchoolTypeChanged}
-              />
-              
-              <label className="form__label" htmlFor="address">
-          School Address: 
+        />
+
+        <label className="form__label" htmlFor="address">
+          School Address:
         </label>
         <input
           className={`form__input ${validAddressClass}`}
@@ -133,14 +131,11 @@ const NewSchool = () => {
           value={address}
           onChange={onAddressChanged}
         />
- <div className="form__action-buttons">
-            <button
-              className="icon-button"
-              title="Save"
-              disabled={!canSave}
-            >Create</button>
-          </div>
-        
+        <div className="form__action-buttons">
+          <button className="icon-button" title="Save" disabled={!canSave}>
+            Create
+          </button>
+        </div>
       </form>
     </>
   );
