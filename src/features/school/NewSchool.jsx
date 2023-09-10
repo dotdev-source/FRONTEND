@@ -46,7 +46,7 @@ const NewSchool = () => {
       setSchoolType("");
       setAddress("");
 
-      navigate("/dashboard");
+      navigate("/dashboard/schools");
     }
   }, [isSuccess, navigate]);
 

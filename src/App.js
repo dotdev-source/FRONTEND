@@ -29,11 +29,15 @@ function App() {
         <Route path="schools/new" element={<NewSchool />} />
 
         <Route element={<Prefetch />}>
-        <Route path="/dashboard" element={<DashboardLayout />}>
+
+          <Route path="/dashboard" element={<DashboardLayout />}>
+
             <Route index element={<DashboardHome />} />
             
             <Route path="/dashboard/schools">
-            <Route index element={<Schools />} />
+
+              <Route index element={<Schools />} />
+
               <Route path="schools/:id" element={<EditSchool />} />
 
           </Route>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useAddNewAdminMutation } from "./adminApiSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ROLES } from "../../config/roles";
 
 const FULLNAME_REGEX = /^[a-z ,.'-]+$/i;
@@ -179,6 +179,10 @@ const NewAdminForm = () => {
         >
           {options}
         </select>
+
+        <p>Already have an account? {" "}
+                <Link to="/login">login here</Link>
+            </p>
       </form>
     </>
   );
