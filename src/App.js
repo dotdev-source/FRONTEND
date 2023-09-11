@@ -10,7 +10,7 @@ import Teachers from "./features/teachers/Teachers";
 import AddNewTeacher from "./features/teachers/NewTeacherForm";
 import AdminSignup from "./features/admin/AdminSignup";
 import EditStudent from "./features/students/EditStudent";
-// import Prefetch from "./features/auth/Prefetch";
+import Prefetch from "./features/auth/Prefetch";
 import Schools from "./features/school/Schools";
 import NewSchool from "./features/school/NewSchool";
 import EditSchool from "./features/school/EditSchool"
@@ -18,7 +18,7 @@ import EditSchool from "./features/school/EditSchool"
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+     
         <Route path="signup" element={<AdminSignup />} />
         <Route path="login" element={<Login />} />
 
@@ -26,7 +26,7 @@ function App() {
         {/* Begining of Dashboard Layout or protected routes */}
         <Route path="schools/new" element={<NewSchool />} />
 
-        {/* <Route element={<Prefetch />}> */}
+        <Route element={<Prefetch />}>
 
           <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Home />} />
@@ -55,9 +55,9 @@ function App() {
             <Route path="students/new" element={<AddNewStudent  />} />
           </Route>
           </Route>
-          {/* </Route> */}
+          </Route>
         {/* End of Dashboard Layout or End of Protected Routes*/}
-      </Route>
+    
     </Routes>
   );
 }

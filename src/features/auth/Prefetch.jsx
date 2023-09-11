@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 const Prefetch = () => {
     useEffect(() => {
         console.log('subscribing')
-        const teachers = store.dispatch(teachersApiSlice.endpoints.getTeacher.initiate())
+        const teachers = store.dispatch(teachersApiSlice.endpoints.getTeachers.initiate())
         const students = store.dispatch(studentsApiSlice.endpoints.getStudents.initiate())
 
         return () => {
