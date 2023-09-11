@@ -35,7 +35,7 @@ const Navbar = () => {
             className="icon-button"
             title="Logout"
             onClick={sendLogout}
-        >
+        >logout
         </button>
     )
     return (
