@@ -8,7 +8,7 @@ const initialState = teachersAdapter.getInitialState();
 export const teachersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTeachers: builder.query({
-      query: () => "teachers/admin?limit=10&page=10",
+      query: () => "teachers/admin",
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
