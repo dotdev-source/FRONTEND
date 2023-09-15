@@ -14,26 +14,28 @@ import Schools from "./features/school/Schools";
 import NewSchool from "./features/school/NewSchool";
 import EditSchool from "./features/school/EditSchool";
 import PersistLogin from "./features/auth/PersistLogin";
-import RequireAuth from "..features/auth/RequireAuth";
+import RequireAuth from "./features/auth/RequireAuth";
 import {ROLES} from './config/roles'
 
 function App() {
   return (
     <Routes>
+      {/* Public Routes */}
       <Route path="signup" element={<AdminSignup />} />
       <Route path="login" element={<Login />} />
 
       {/* Begining of Dashboard Layout or protected routes */}
-      <Route path="schools/new" element={<NewSchool />} />
+      {/* <Route path="schools/new" element={<NewSchool />} /> */}
 
       <Route element={<PersistLogin />}>
-        <Route element={<Prefetch />}>
+      <Route element={<RequireAuth />}>
+        {/* <Route element={<Prefetch allowedRoles={[]} />}> */}
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Home />} />
 
             <Route path="/dashboard/schools">
               <Route index element={<Schools />} />
-
+              <Route path="schools/new" element={<NewSchool />} />
               <Route path="schools/:id" element={<EditSchool />} />
             </Route>
 
@@ -49,7 +51,8 @@ function App() {
               <Route path="students/new" element={<AddNewStudent />} />
             </Route>
           </Route>
-        </Route>
+          </Route>
+          {/* </Route> */}
       </Route>
 
       {/* End of Dashboard Layout or End of Protected Routes*/}
