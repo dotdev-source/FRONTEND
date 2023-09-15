@@ -4,14 +4,14 @@ import { useSendLogoutMutation } from '../features/auth/authApiSlice';
 import useAuth from "../hooks/useAuth";
 
 
-const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
-const STUDENT_REGEX = /^\/dashboard\/teachers(\/)?$/
-const TEACHERS_REGEX = /^\/dashboard\/teachers(\/)?$/
+// const DASHBOARD_REGEX = /^\/dashboard(\/)?$/
+// const STUDENT_REGEX = /^\/dashboard\/teachers(\/)?$/
+// const TEACHERS_REGEX = /^\/dashboard\/teachers(\/)?$/
 
 const SideNav = () => {
-  const { fullname, status } = useAuth();
+  const { fullname, status } = useAuth(); 
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
 
     const [sendLogout, {
         isLoading,
@@ -26,12 +26,10 @@ const SideNav = () => {
   if (isLoading) return <p>Logging Out...</p>
 
   if (isError) return <p>Error: {error.data?.message}</p>
-  let dashboardClass = null
-  if (!DASHBOARD_REGEX.test(pathname) && !STUDENT_REGEX.test(pathname) && !TEACHERS_REGEX.test(pathname)) {
-      dashboardClass = "dashboard-header__container--small"
-  }
+  
 
   const logoutButton = (
+
       <button
           className="icon-button"
           title="Logout"
@@ -43,7 +41,9 @@ const SideNav = () => {
   return <div>
     <p>{fullname}</p>
     <p>{status}</p>
+    {/* Use the status above the display the other contents of the sidebar */}
     {logoutButton}
+
     <h1>SideNav</h1></div>;
 };
 

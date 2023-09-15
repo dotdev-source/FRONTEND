@@ -14,6 +14,8 @@ import Schools from "./features/school/Schools";
 import NewSchool from "./features/school/NewSchool";
 import EditSchool from "./features/school/EditSchool";
 import PersistLogin from "./features/auth/PersistLogin";
+import RequireAuth from "..features/auth/RequireAuth";
+import {ROLES} from './config/roles'
 
 function App() {
   return (
