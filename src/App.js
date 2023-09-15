@@ -13,6 +13,7 @@ import Prefetch from "./features/auth/Prefetch";
 import Schools from "./features/school/Schools";
 import NewSchool from "./features/school/NewSchool";
 import EditSchool from "./features/school/EditSchool"
+import PersistLogin from "./features/auth/PersistLogin";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         {/* Begining of Dashboard Layout or protected routes */}
         <Route path="schools/new" element={<NewSchool />} />
 
+        <Route element={<PersistLogin />}>
         <Route element={<Prefetch />}>
 
           <Route path="/dashboard" element={<DashboardLayout />}>
@@ -54,7 +56,9 @@ function App() {
             <Route path="students/new" element={<AddNewStudent  />} />
           </Route>
           </Route>
-          </Route>
+        </Route>
+        </Route>
+        
         {/* End of Dashboard Layout or End of Protected Routes*/}
     
     </Routes>
