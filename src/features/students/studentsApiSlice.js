@@ -13,7 +13,7 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
         return response.status === 200 && !result.isError;
       },
       transformResponse: (response) => {
-        const loadedStudents = response.map((student) => {
+        const loadedStudents = response.data?.map((student) => {
           student.id = student._id;
           return student;
         });

@@ -13,7 +13,7 @@ const useAuth = () => {
         const decoded = jwtDecode(token)
         const { username, roles } = decoded.UserInfo
 
-        isStudent = roles.includes('isStudent')
+        isStudent = roles.includes('Student')
         isTeacher = roles.includes('Teacher')
         isAdmin = roles.includes('Admin')
 

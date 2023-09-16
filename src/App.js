@@ -28,8 +28,8 @@ function App() {
       {/* <Route path="schools/new" element={<NewSchool />} /> */}
 
       <Route element={<PersistLogin />}>
-      <Route element={<RequireAuth />}>
-        {/* <Route element={<Prefetch allowedRoles={[]} />}> */}
+      <Route element={<RequireAuth allowedRoles={[ROLES.Admin]}/>}>
+        <Route element={<Prefetch  />}>
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Home />} />
 
@@ -52,7 +52,7 @@ function App() {
             </Route>
           </Route>
           </Route>
-          {/* </Route> */}
+          </Route>
       </Route>
 
       {/* End of Dashboard Layout or End of Protected Routes*/}
