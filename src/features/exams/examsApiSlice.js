@@ -5,7 +5,7 @@ const examsAdapter = createEntityAdapter({});
 
 const initialState = examsAdapter.getInitialState();
 
-export const examesApiSlice = apiSlice.injectEndpoints({
+export const examsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getExams: builder.query({
       query: () => ({
@@ -67,11 +67,11 @@ export const {
   useAddNewexamMutation,
   useUpdateexamMutation,
   useDeleteexamMutation,
-} = examesApiSlice;
+} = examsApiSlice;
 
 // returns the query result object
 export const selectExamResult =
-  examesApiSlice.endpoints.getExams.select();
+  examsApiSlice.endpoints.getExams.select();
 
 // creates memoized selector
 const selectExamData = createSelector(

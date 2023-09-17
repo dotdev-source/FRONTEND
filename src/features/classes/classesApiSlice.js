@@ -71,7 +71,7 @@ export const {
 
 // returns the query result object
 export const selectClassResult =
-  classesApiSlice.endpoints.getClasss.select();
+  classesApiSlice.endpoints.getClasses.select();
 
 // creates memoized selector
 const selectClassData = createSelector(

@@ -7,7 +7,7 @@ import { programsApiSlice } from '../programs/programsApiSlice';
 import { classesApiSlice } from '../classes/classesApiSlice';
 import { examsApiSlice } from '../exams/examsApiSlice';
 import { academicYearApiSlice } from '../academicYear/academicYearApiSlice';
-import { acdemicTermApiSlice } from '../acdemicTerm/acdemicTermApiSlice';
+import { academicTermApiSlice } from '../academicTerm/academicTermApiSlice';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ const Prefetch = () => {
         const classes = store.dispatch(classesApiSlice.endpoints.getClasses.initiate())
         const exams = store.dispatch(examsApiSlice.endpoints.getExams.initiate())
         const academicYears = store.dispatch(academicYearApiSlice.endpoints.getAcademicYears.initiate())
-        const academicTerms= store.dispatch(acdemicTermApiSlice.endpoints.getAcademicTerms.initiate())
+        const academicTerms= store.dispatch(academicTermApiSlice.endpoints.getAcademicTerms.initiate())
 
         return () => {
             console.log('unsubscribing')
