@@ -1,14 +1,15 @@
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { selectTeachersById } from './teachersApiSlice'
 import EditTeacherForm from './EditTeacherForm'
+import { useGetTeachersQuery } from './teachersApiSlice'
+import PulseLoader from 'react-spinners/PulseLoader'
 
 const EditTeacher = () => {
     const { id } = useParams()
 
-    const teacher = useSelector(state => selectTeachersById(state, id))
+    const { teacher } = useGetTeachersQuery('Teacher', { selectFromResultData: ({ data }) => ({ teacher: data?.entities[id] }) })
 
-    const content = teacher ? <EditTeacherForm teacher={teacher} /> : <p>Loading...</p>
+    if(!teacher) return <PulseLoader color="fff" />
+    const content = <EditTeacherForm teacher={teacher } />
 
     return content
 }

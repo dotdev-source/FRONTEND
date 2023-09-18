@@ -1,31 +1,31 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/api/apiSlice";
 
-const schoolAdapter = createEntityAdapter({});
+const schoolsAdapter = createEntityAdapter({});
 
-const initialState = schoolAdapter.getInitialState();
+const initialState = schoolsAdapter.getInitialState();
 
-export const schoolApiSlice = apiSlice.injectEndpoints({
+export const schoolsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getSchool: builder.query({
-      query: () => "/school",
+    getSchools: builder.query({
+      query: () => "/schools",
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
       transformResponse: (responseData) => {
-        const loadedSchool = responseData.map((school) => {
+        const loadedSchools = responseData.map((school) => {
           school.id = school._id;
           return school;
         });
-        return schoolAdapter.setAll(initialState, loadedSchool);
+        return schoolsAdapter.setAll(initialState, loadedSchools);
       },
       providesTags: (result, error, arg) => {
         if (result?.id) {
           return [
-            { type: "School", id: "LIST" },
+            { type: "School", id: "SCHOOLLIST" },
             ...result.ids.map((id) => ({ type: "School", id })),
           ];
-        } else return [{ type: "School", id: "LIST" }];
+        } else return [{ type: "School", id: "SCHOOLLIST" }];
       },
     }),
     addNewSchool: builder.mutation({
@@ -64,11 +64,11 @@ export const {
   useAddNewSchoolMutation,
   useUpdateSchoolMutation,
   useDeleteSchoolMutation,
-} = schoolApiSlice;
+} = schoolsApiSlice;
 
 // returns the query result object
 export const selectSchoolResult =
-  schoolApiSlice.endpoints.getSchool.select();
+  schoolsApiSlice.endpoints.getSchool.select();
 
 // creates memoized selector
 const selectSchoolData = createSelector(
@@ -82,6 +82,6 @@ export const {
   selectById: selectSchoolById,
   selectIds: selectSchoolIds,
   // Pass in a selector that returns the users slice of state
-} = schoolAdapter.getSelectors(
+} = schoolsAdapter.getSelectors(
   (state) => selectSchoolData(state) ?? initialState
 );
