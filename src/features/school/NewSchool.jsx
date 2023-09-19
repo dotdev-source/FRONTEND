@@ -1,12 +1,19 @@
 import { useState, useEffect } from "react";
 import { useAddNewSchoolMutation } from "./schoolApiSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import banner from "../../assets/banner.jpg";
 
 const FIELDS_REGEX = /^[a-z ,.'-]+$/i;
 
 const NewSchool = () => {
-  const [addNewSchool, { isLoading, isSuccess, isError, error }] =
-    useAddNewSchoolMutation();
+  const [
+    addNewSchool,
+    {
+      isLoading,
+      isSuccess,
+      //  isError, error
+    },
+  ] = useAddNewSchoolMutation();
 
   const navigate = useNavigate();
 
@@ -57,7 +64,7 @@ const NewSchool = () => {
 
   const canSave =
     [validSchoolName, validRegNo, validSchoolType, validAddress].every(
-      Boolean
+      Boolean,
     ) && !isLoading;
 
   const onSaveSchoolClicked = async (e) => {
@@ -67,7 +74,7 @@ const NewSchool = () => {
     }
   };
 
-  const errClass = isError ? "errmsg" : "offscreen";
+  // const errClass = isError ? "errmsg" : "offscreen";
   const validSchoolClass = !validSchoolName ? "form__input--incomplete" : "";
   const validRegNoClass = !validRegNo ? "form__input--incomplete" : "";
   const validSchoolTypeClass = !validSchoolType
@@ -76,68 +83,103 @@ const NewSchool = () => {
   const validAddressClass = !validAddress ? "form__input--incomplete" : "";
 
   const content = (
-    <>
-      <p className={errClass}>{error?.data?.message}</p>
+    <div className="grid h-screen grid-cols-[500px_1fr] bg-white">
+      <img alt="" src={banner} className="h-full w-full" />
+      <section className="relative flex h-full w-full flex-col pl-[207px] pr-[74px] pt-[88px]">
+        <h3 className="text-2xl font-bold leading-9 text-black">
+          Create Your School
+        </h3>
+        <main className="mt-10 w-full">
+          {/* <p className={errClass}>{error?.data?.message}</p> */}
 
-      <form className="form" onSubmit={onSaveSchoolClicked}>
-        <div className="form__title-row">
-          <h2>CreateNew School</h2>
-        </div>
-        <label className="form__label" htmlFor="schoolName">
-          SchoolName:
-        </label>
-        <input
-          className={`form__input ${validSchoolClass}`}
-          id="schoolName"
-          name="schoolName"
-          type="text"
-          autoComplete="off"
-          value={schoolName}
-          onChange={onSchoolNameChanged}
-        />
-
-        <label className="form__label" htmlFor="regNo">
-          RegNo:
-        </label>
-        <input
-          className={`form__input ${validRegNoClass}`}
-          id="regNo"
-          name="regNo"
-          type="text"
-          value={regNo}
-          onChange={onRegNoChanged}
-        />
-
-        <label className="form__label" htmlFor="schoolType">
-          School Type:
-        </label>
-        <input
-          className={`form__input ${validSchoolTypeClass}`}
-          id="schoolType"
-          name="schoolType"
-          type="text"
-          value={schoolType}
-          onChange={onSchoolTypeChanged}
-        />
-
-        <label className="form__label" htmlFor="address">
-          School Address:
-        </label>
-        <input
-          className={`form__input ${validAddressClass}`}
-          id="address"
-          name="address"
-          type="text"
-          value={address}
-          onChange={onAddressChanged}
-        />
-        <div className="form__action-buttons">
-          <button className="icon-button" title="Save" disabled={!canSave}>
-            Create
-          </button>
-        </div>
-      </form>
-    </>
+          <form className="form w-full" onSubmit={onSaveSchoolClicked}>
+            <div className="mb-8 flex flex-col gap-y-2">
+              <label
+                className="text-sm font-medium leading-[21px] text-[#333]"
+                htmlFor="schoolName"
+              >
+                SchoolName
+              </label>
+              <input
+                className={`w-full rounded border-2 border-solid border-[#dfe1e6] bg-[#fafbfc] px-6 py-4 text-sm font-normal leading-5 text-[#656565] ${validSchoolClass}`}
+                id="schoolName"
+                name="schoolName"
+                type="text"
+                autoComplete="off"
+                value={schoolName}
+                onChange={onSchoolNameChanged}
+              />
+            </div>
+            <div className="mb-8 flex flex-col gap-y-2">
+              <label
+                className="text-sm font-medium leading-[21px] text-[#333]"
+                htmlFor="regNo"
+              >
+                RegNo
+              </label>
+              <input
+                className={`w-full rounded border-2 border-solid border-[#dfe1e6] bg-[#fafbfc] px-6 py-4 text-sm font-normal leading-5 text-[#656565] ${validRegNoClass}`}
+                id="regNo"
+                name="regNo"
+                type="text"
+                value={regNo}
+                onChange={onRegNoChanged}
+              />
+            </div>
+            <div className="mb-8 flex flex-col gap-y-2">
+              <label
+                className="text-sm font-medium leading-[21px] text-[#333]"
+                htmlFor="schoolType"
+              >
+                School Type:
+              </label>
+              <input
+                className={`w-full rounded border-2 border-solid border-[#dfe1e6] bg-[#fafbfc] px-6 py-4 text-sm font-normal leading-5 text-[#656565] ${validSchoolTypeClass}`}
+                id="schoolType"
+                name="schoolType"
+                type="text"
+                value={schoolType}
+                onChange={onSchoolTypeChanged}
+              />
+            </div>
+            <div className="mb-8 flex flex-col gap-y-2">
+              <label
+                className="text-sm font-medium leading-[21px] text-[#333]"
+                htmlFor="address"
+              >
+                School Address:
+              </label>
+              <input
+                className={`w-full rounded border-2 border-solid border-[#dfe1e6] bg-[#fafbfc] px-6 py-4 text-sm font-normal leading-5 text-[#656565] ${validAddressClass}`}
+                id="address"
+                name="address"
+                type="text"
+                value={address}
+                onChange={onAddressChanged}
+              />
+            </div>
+            <div className="mt-10 flex justify-end gap-x-6">
+              <button className="rounded border-2 border-solid border-[#403294] bg-white px-8 py-2 text-base font-medium text-[#403294]">
+                Cancel
+              </button>
+              <button
+                className="bg-[#403294] px-8 py-2 text-base font-medium text-white"
+                title="Save"
+                disabled={!canSave}
+              >
+                Create
+              </button>
+            </div>
+          </form>
+        </main>
+        <p className="absolute bottom-[48px] text-center text-base font-normal text-black">
+          Already have an account?
+          <span className="font-medium text-[#403294]">
+            <Link to="/signup">signup here</Link>
+          </span>
+        </p>
+      </section>
+    </div>
   );
 
   return content;
