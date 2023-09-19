@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAddNewSchoolMutation } from "./schoolApiSlice";
 import { useNavigate, Link } from "react-router-dom";
-import banner from "../../../public/banner.jpg";
+import banner from "../../assets/banner.jpg";
 
 const FIELDS_REGEX = /^[a-z ,.'-]+$/i;
 

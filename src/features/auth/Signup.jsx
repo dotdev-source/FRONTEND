@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import banner from "../../../public/banner.jpg";
+import banner from "./../../assets/banner.jpg";
 
 const Signup = () => {
   function handleSubmit() {}

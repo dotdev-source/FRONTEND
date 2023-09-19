@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
 // import usePersist from "../../hooks/usePersist";
-import banner from "../../../public/banner.jpg";
+import banner from "./../../assets/banner.jpg";
 
 const Login = () => {
   const emailRef = useRef();
