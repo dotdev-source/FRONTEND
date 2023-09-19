@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
 // import usePersist from "../../hooks/usePersist";
+import banner from "../../../public/banner.jpg";
 
 const Login = () => {
   const emailRef = useRef();
@@ -59,7 +60,7 @@ const Login = () => {
 
   const content = (
     <div className="grid h-screen grid-cols-[500px_1fr] bg-white">
-      <img alt="" src="" className="h-full w-full" />
+      <img alt="" src={banner} className="h-full w-full" />
       <section className="relative flex h-full w-full flex-col justify-center pl-[207px] pr-[74px]">
         <h3 className="text-2xl font-bold leading-9 text-black">Sign in</h3>
         <main className="mt-10 w-full">

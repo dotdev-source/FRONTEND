@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import banner from "../../../public/banner.jpg";
 
 const Signup = () => {
   function handleSubmit() {}
 
   return (
     <div className="grid h-screen grid-cols-[500px_1fr] bg-white">
-      <img alt="" src="" className="h-full w-full" />
+      <img alt="" src={banner} className="h-full w-full" />
       <section className="relative flex h-full w-full flex-col pl-[207px] pr-[74px] pt-[88px]">
         <h3 className="text-2xl font-bold leading-9 text-black">
           Create Account
