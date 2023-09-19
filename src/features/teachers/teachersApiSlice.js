@@ -8,24 +8,27 @@ const initialState = teachersAdapter.getInitialState();
 export const teachersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTeachers: builder.query({
-      query: () => "teachers/admin?limit=10&page=10",
-      validateStatus: (response, result) => {
-        return response.status === 200 && !result.isError;
-      },
-      transformResponse: (responseData) => {
-        const loadedTeachers = responseData.map((teacher) => {
-          teacher.id = teacher._id;
-          return teacher;
+      query: () => ({
+        url: "/teachers/admin",
+        validateStatus: (response, result) => {
+          return response.status === 200 && !result.isError;
+        },
+      }),
+      
+      transformResponse: response => {
+        const loadedTeachers = response.data?.map(teacher => {
+          teacher.id = teacher._id
+          return teacher
         });
         return teachersAdapter.setAll(initialState, loadedTeachers);
       },
       providesTags: (result, error, arg) => {
-        if (result?.id) {
+        if (result?.ids) {
           return [
-            { type: "teacher", id: "LIST" },
-            ...result.ids.map((id) => ({ type: "teacher", id })),
+            { type: "Teacher", id: "LIST" },
+            ...result.ids.map((id) => ({ type: "Teacher", id })),
           ];
-        } else return [{ type: "teacher", id: "LIST" }];
+        } else return [{ type: "Teacher", id: "LIST" }];
       },
     }),
     addNewTeacher: builder.mutation({

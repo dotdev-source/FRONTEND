@@ -12,8 +12,8 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
-      transformResponse: (responseData) => {
-        const loadedStudents = responseData.map((student) => {
+      transformResponse: (response) => {
+        const loadedStudents = response.data?.map((student) => {
           student.id = student._id;
           return student;
         });

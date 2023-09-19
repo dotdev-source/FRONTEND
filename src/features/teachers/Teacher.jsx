@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
-
-import { useSelector } from "react-redux";
-import { selectTeachersById } from "./teachersApiSlice";
+import { useGetTeachersQuery } from "./teachersApiSlice";
+import {memo} from 'react'
 
 const Teacher = ({ teacherId }) => {
-  const teacher = useSelector((state) => selectTeachersById(state, teacherId));
+  const { teacher } = useGetTeachersQuery('Teacher', { selectFromResultData: ({ data }) => ({ teacher: data?.entities[teacherId] }) })
 
   const navigate = useNavigate();
 
@@ -23,4 +22,6 @@ const Teacher = ({ teacherId }) => {
     );
   } else return null;
 };
-export default Teacher;
+
+const memoizedTeacher = memo(Teacher)
+export default memoizedTeacher;

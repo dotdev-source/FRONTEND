@@ -1,14 +1,18 @@
-import { useSelector } from 'react-redux'
-import { selectAllStudents } from '../students/studentsApiSlice'
-import NewStudentForm from './NewNoteForm'
+import NewStudentForm from "./NewNoteForm";
+import { useGetTeachersQuery } from "./teachersApiSlice";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const NewStudent = () => {
-    const students = useSelector(selectAllStudents)
+    const { teacher } = useGetTeachersQuery('Teacher', {
+        selectFromResultData: ({ data }) => ({
+            teachers: data?.ids.map(id => data?.entities[id])
+        })
+    });
 
-    if (!students?.length) return <p>Not Currently Available</p>
+  if (!teacher?.length) return <PulseLoader color="fff" />;
 
-    const content = <NewStudentForm students={students} />
+  const content = <NewStudentForm teacher={teacher} />;
 
-    return content
-}
-export default NewStudent
+  return content;
+};
+export default NewStudent;
